@@ -11,6 +11,7 @@ import ImageUtils from '../models/utils/ImageUtils';
 import User from '../models/User';
 import { Context } from '../apollo-server';
 import promise from 'bluebird';
+import UpdateContentInput from './input/project/UpdateContentInput';
 
 @Resolver(Project)
 class ProjectResolver {
@@ -74,6 +75,10 @@ class ProjectResolver {
       where: {user_assigned: currentUser, user: currentUser},
       relations: ["user_assigned", "user"]
     });
+	}
+	@Mutation(() => Project)
+		async updateProjectContent(@Args() {id, name, description}: UpdateContentInput) {
+			return ProjectUtils.updateProjectContent({ id, name, description })
 	}
 }
 

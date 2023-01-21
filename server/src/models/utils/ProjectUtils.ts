@@ -6,6 +6,7 @@ import GetProjectInput from "../../resolvers/input/project/GetProjectInput";
 import Project from "../Project";
 import UserUtils from "./UserUtils";
 import User from "../User";
+import UpdateContentInput from "../../resolvers/input/project/UpdateContentInput";
 
 class ProjectUtils extends Project {
   static async createProject({ name, description, created_at, projectPictureName }: CreateProjectInput) {
@@ -43,6 +44,17 @@ class ProjectUtils extends Project {
     await user.save();
 
     return project;
+  }
+
+  static async updateProjectContent({id, name, description }: UpdateContentInput) {
+    const issue = await this.getProjectById({ id });
+
+    issue.name = name;
+    issue.description = description;
+
+    await issue.save();
+
+    return issue;
   }
 };
 

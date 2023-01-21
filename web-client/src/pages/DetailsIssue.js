@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import { useMutation, useQuery } from '@apollo/client';
 import { useParams } from 'react-router-dom';
-import { getIssueById, updateIssueStatus, updateIssuePriority } from '../graphql/Issue';
+import { getIssueById, updateIssueStatus, updateIssuePriority, deleteIssue } from '../graphql/Issue';
 import Button from '../components/Button';
 import AddUserToIssue from './components/issues/AddUserToIssue';
 import priorityOptions from '../components/options/priorityOptions';
 import statusOptions from '../components/options/statusOptions';
 import modify from '../assets/images/modification-icon.svg';
 import Select from '../components/Select';
+import UpdateContent from './components/issues/UpdateContent';
 
 
 const capitalizeFirstLetter = value => {
@@ -20,6 +21,7 @@ const DetailsIssue = () => {
   const [displayPrioritySelect, setDisplayPrioritySelect] = useState(false);
   const [priority, setPriority] = useState('');
   const [status, setStatus] = useState('');
+  const [displayUpdateContent, setDisplayUpdateContent] = useState(false);
 
   let { id } = useParams();
 
@@ -46,6 +48,20 @@ const DetailsIssue = () => {
       onError: (error) => console.log(error.message)
     }
   );
+
+  const [suppression] = useMutation( deleteIssue );
+
+  const onSubmit = (event) => {
+		event.preventDefault();
+    console.log(parseInt(id))
+
+		suppression({
+			variables: {
+        id: parseInt(id),				
+			},        
+		});
+      window.location.href = "http://localhost:3000/issuesProject";
+  }
 
   if (loading) return <>Chargement</>
 
@@ -75,7 +91,6 @@ const DetailsIssue = () => {
   const priorityLabel = priorityOptions.find(value => value.value === issue.priority).label;
 
   const newDate = new Date(issue.created_at);
-  const dateToDisplay = `${newDate.getDate()}/${newDate.getMonth()}/${newDate.getFullYear()}`;
 
   return <div className='px-8 md:px-20'>
 
@@ -102,6 +117,18 @@ const DetailsIssue = () => {
     <div className='my-8 w-11/12 border border-b border-secondary_color'/>
 
     <div className='text-black bg-bg_issue rounded-lg w-full p-4'>
+    <div className="text-center">
+            <Button
+              onClick={setDisplayUpdateContent}
+              onClickValue={displayUpdateContent}
+              buttonLabel='Modifier'
+              buttonType='button'
+              buttonClassName='my-auto'
+            />
+            {displayUpdateContent &&
+              <UpdateContent setDisplayUpdateContent={setDisplayUpdateContent} issue={issue}/>
+            }
+          </div>
       <p className='text-xl font-bold my-4'>{issue.name}</p>
 
       <p className='font-bold mb-2'>Description :</p>
@@ -183,11 +210,16 @@ const DetailsIssue = () => {
         </div>
 
         <div>
-          <p className='mb-6'><span className='font-bold'>Début : </span>{dateToDisplay}</p>
+          <p className='mb-6'><span className='font-bold'>Début : </span>{newDate.toLocaleDateString("fr")}</p>
 
           <p><span className='font-bold'>Temps estimé : </span>{issue.estimated || "Pas d'estimation"}</p>
         </div>
       </div>
+      <form onSubmit={onSubmit} className="w-2/3 mx-auto">
+        <div className="text-center">
+          <button className="submit-button mb-8 mt-4">Supprimer le ticket</button>
+        </div>
+      </form>
     </div>
   </div>;
 }

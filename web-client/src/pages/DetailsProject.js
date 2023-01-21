@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
 import Carousel, { CarouselItem } from '../components/Carousel';
-import { NavLink, useParams } from 'react-router-dom';
-import { useQuery } from "@apollo/client";
-import { getProjectById } from "../graphql/Project.js";
+import { NavLink, Redirect, useParams } from 'react-router-dom';
+import { useMutation, useQuery } from "@apollo/client";
+import { deleteProject, getProjectById } from "../graphql/Project.js";
 import smiley from '../images/smiley.png';
 import Button from '../components/Button';
 import CreateIssue from './components/issues/CreateIssue';
 import { getIssuesByProjectId } from '../graphql/Issue';
 import Issues from './Issues';
 import AddUserToProject from './components/projects/AddUserToProject';
+import UpdateContent from './components/projects/UpdateContent';
 
 const imagesProject = [
 	{ id: 1, url: 'https://www.consoglobe.com/wp-content/uploads/2015/12/concours-animaux-sauvages-drole-1.jpg.webp' },
@@ -52,12 +53,29 @@ const DetailsProject = ({ actualUser }) => {
   const [displayCreation, setDisplayCreation] = useState(false);
   const [displayAddUserOnProject, setDisplayAddUserOnProject] = useState(false);
   const [showFiveTickets, setShowFiveTickets] = useState(false);
+  const [displayUpdateContent, setDisplayUpdateContent] = useState(false);
 
   let { id } = useParams();
 
   const { loading, error, data, refetch } = useQuery(getProjectById, { variables: { id: parseInt(id) } });
 
   const issuesQuery = useQuery(getIssuesByProjectId, { variables: { projectId: parseInt(id) } });
+
+  const [suppression] = useMutation( deleteProject );
+
+  const onSubmit = (event) => {
+		event.preventDefault();
+    console.log(parseInt(id))
+
+		suppression({
+			variables: {
+        id: parseInt(id),				
+			},        
+		});
+    window.setTimeout(function () {
+      window.location.href = "http://localhost:3000/projects";
+    }, 500);
+  }
 
 	if (error) return `Error! ${error.message}`;
 
@@ -118,6 +136,19 @@ const DetailsProject = ({ actualUser }) => {
 
         </div>
 
+        <div className="text-center">
+            <Button
+              onClick={setDisplayUpdateContent}
+              onClickValue={displayUpdateContent}
+              buttonLabel='Modifier'
+              buttonType='button'
+              buttonClassName='my-auto'
+            />
+            {displayUpdateContent &&
+              <UpdateContent setDisplayUpdateContent={setDisplayUpdateContent} project={data.getProjectById}/>
+            }
+      </div>
+
         {displayCreation &&
           <CreateIssue
             setDisplayCreation={setDisplayCreation}
@@ -139,16 +170,15 @@ const DetailsProject = ({ actualUser }) => {
       </div>
 
       <Carousel>
-        {data.getProjectById.images && data.getProjectById.images.map(image =>
+
           <CarouselItem>
             <img
-              key={image.id}
+              key="image"
               className="object-none object-center"
-              src={`/images/${image.name}`}
+              src={`/images/luffy's flag.jpg`}
               alt="Projet"
             />
           </CarouselItem>
-        )}
       </Carousel>
       
       {!issuesQuery.loading && issuesQuery.data.getIssuesByProjectId[0] && !issuesQuery.error
@@ -210,6 +240,11 @@ const DetailsProject = ({ actualUser }) => {
           />
         </svg>
       </div>
+      <form onSubmit={onSubmit} className="w-2/3 mx-auto">
+        <div className="text-center">
+          <button className="submit-button mb-8 mt-4">Supprimer le projet</button>
+        </div>
+      </form>
     </div>
   );
 }

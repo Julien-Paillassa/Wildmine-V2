@@ -41,6 +41,8 @@ const CreateIssue = ({ setDisplayCreation, projectName, projectId, userId, refet
         updatedAt: new Date().toJSON(),
       }
     });
+    window.location.href = `http://localhost:3000/detailsProject/${projectId}`;
+    
   };
 
   useEffect(() => {

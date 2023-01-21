@@ -1,15 +1,5 @@
 import { Field, ID, ObjectType } from 'type-graphql';
-import {
-	BaseEntity,
-	Column,
-	Entity,
-	JoinColumn,
-	ManyToOne,
-	ManyToMany,
-	JoinTable,
-	PrimaryGeneratedColumn,
-	OneToMany,
-} from 'typeorm';
+import { BaseEntity, Column, Entity, ManyToMany, JoinTable, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 
 import Color from './Color';
 import Issue from './Issue';

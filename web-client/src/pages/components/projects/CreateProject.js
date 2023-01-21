@@ -50,6 +50,9 @@ const CreateProject = ({ setDisplayCreation }) => {
 				images: pictures			
 			},
 		});
+		window.setTimeout(function () {
+			window.location.href = "http://localhost:3000/projects";
+		  }, 200);
 	};
 
 	return  <div className='modal-background'>

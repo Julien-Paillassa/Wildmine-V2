@@ -55,6 +55,25 @@ export const getProjectById = gql`
 	}
 `;
 
+export const deleteProject = gql`
+	mutation deleteProject($id: Float!) {
+		deleteProject(id: $id) {
+			id
+			name
+		}
+	}
+`;
+
+export const updateProjectContent = gql`
+	mutation updateProjectContent($id: Float!, $name: String!, $description: String!) {
+		updateProjectContent(id: $id, name: $name, description: $description) {
+			id
+			name
+      		description
+		}
+	}
+`;
+
 export const createProject = gql`
 	mutation createProject($name: String!, $description: String!, $createdAt: String!, $projectPictureName: String!, $images: [String!]!) {
 		createProject(name: $name, description: $description, created_at: $createdAt, projectPictureName: $projectPictureName, images: $images) {

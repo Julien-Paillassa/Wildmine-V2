@@ -5,7 +5,6 @@ const DisplayIssuesValues = ({ issue, issueIndex, issues }) => {
   let statusColor;
 
   const newDate = new Date(issue.created_at)
-  const dateToDisplay = `${newDate.getDate()}/${newDate.getMonth()}/${newDate.getFullYear()}`
 
   if (issue.priority === 'HIGH') priorityColor = 'bg-issue_red'
   if (issue.priority === 'NORMAL') priorityColor = 'bg-issue_orange'
@@ -32,7 +31,7 @@ const DisplayIssuesValues = ({ issue, issueIndex, issues }) => {
 
     <div className={`${statusColor} w-[25px] h-[25px] border rounded-full mx-auto`}/>
 
-    <p className='italic'>{dateToDisplay}</p>
+    <p className='italic'>{newDate.toLocaleDateString("fr")}</p>
 
   </div>;
 };

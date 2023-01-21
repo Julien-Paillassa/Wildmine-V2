@@ -11,6 +11,7 @@ import AssignUserInput from './input/issues/AssignUserInput';
 import User from '../models/User';
 import UpdateStatusInput from './input/issues/UpdateStatusInput';
 import UpdatePriorityInput from './input/issues/UpdatePriorityInput';
+import UpdateContentInput from './input/issues/UpdateContentInput';
 
 @Resolver(Issue)
 class IssueResolver {
@@ -87,6 +88,11 @@ class IssueResolver {
   @Mutation(() => Issue)
   async updateIssuePriority(@Args() {id, priority}: UpdatePriorityInput) {
     return IssueUtils.updateIssuePriority({ id, priority })
+  }
+
+  @Mutation(() => Issue)
+  async updateIssueContent(@Args() {id, name, description}: UpdateContentInput) {
+    return IssueUtils.updateIssueContent({ id, name, description })
   }
 }
 

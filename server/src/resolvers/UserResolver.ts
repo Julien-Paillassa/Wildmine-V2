@@ -18,23 +18,9 @@ class UserResolver {
   @Mutation(() => User)
   async createUser(
     @Args()
-    {
-      first_name,
-      last_name,
-      email,
-      password,
-      roles,
-      created_at,
-    }: CreateUserInput
+    { first_name, last_name, email, password, roles,created_at }: CreateUserInput
   ) {
-    return UserUtils.createUser({
-      first_name,
-      last_name,
-      email,
-      password,
-      roles,
-      created_at,
-    });
+    return UserUtils.createUser({first_name,last_name, email, password,roles, created_at,});
   }
 
   @Mutation(() => User)

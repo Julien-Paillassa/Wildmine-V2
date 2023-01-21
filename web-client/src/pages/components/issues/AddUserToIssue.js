@@ -29,6 +29,9 @@ const AddUserToIssue = ({ setDisplayAddUserOnIssue, refetch, issueId }) => {
         issueId: parseInt(issueId),
       }
     });
+    window.setTimeout(function () {
+      window.location.href = "http://localhost:3000/issuesProject";
+    }, 200);
   }
 
   useEffect(() => {

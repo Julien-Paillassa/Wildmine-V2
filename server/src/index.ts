@@ -15,6 +15,7 @@ const runServer = async () => {
 	if (!process.env.DATABASE_URL) {
 		throw Error('DATABASE_URL must be set in environment.');
 	}
+	console.log(process.env.DATABASE_URL)
 
 	await getDatabaseConnection(process.env.DATABASE_URL);
 	console.log('Connected to database');
@@ -30,6 +31,7 @@ const runServer = async () => {
 	app.use(async function (req, res, next) {
 		// check if client sent cookie
 		const { sessionId } = req.cookies;
+		console.log(req.cookies)
 		if (sessionId === undefined) {
 			// no: set a new cookie
 			const uid = UID.sync(18);

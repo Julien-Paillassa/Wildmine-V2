@@ -54,6 +54,18 @@ const Settings = () => {
       <div className="grid grid-cols-10">
         <div className="infos-user-container col-start-1 col-end-4">
           <h3 className="infos-title">Vos Informations</h3>
+          <div className="text-center">
+            <Button
+              onClick={setDisplayUpdateUser}
+              onClickValue={displayUpdateUser}
+              buttonLabel='Modifier'
+              buttonType='button'
+              buttonClassName='my-auto'
+            />
+            {displayUpdateUser &&
+              <UpdateUser setDisplayUpdateUser={setDisplayUpdateUser} user={actualUser}/>
+            }
+          </div>
           <ul className="infos-content">
             <li className="infos-liste"><b>Nom : </b>{actualUser.last_name}</li>
             <li className="infos-liste"><b>Prénom : </b>{actualUser.first_name}</li>
@@ -62,19 +74,9 @@ const Settings = () => {
           </ul>
           <form onSubmit={onSubmit} className="w-2/3 mx-auto">
             <div className="text-center">
-              <button className="submit-button mb-8 mt-4">suppirmer</button>
+              <button className="submit-button mb-8 mt-4">Deconnexion</button>
             </div>
           </form>
-          <Button
-            onClick={setDisplayUpdateUser}
-            onClickValue={displayUpdateUser}
-            buttonLabel='MAJ'
-            buttonType='button'
-            buttonClassName='my-auto'
-          />
-          {displayUpdateUser &&
-            <UpdateUser setDisplayUpdateUser={setDisplayUpdateUser} user={actualUser}/>
-          }
         </div>
         <div className="projects-user-container col-start-5 col-end-11">
             <h3 className="projects-user-title">Vos Projets</h3>     

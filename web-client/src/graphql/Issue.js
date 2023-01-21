@@ -20,6 +20,14 @@ mutation createIssue($name: String!, $description: String!, $projectName: String
       email
       created_at
     }
+    user_assigned {
+      id
+      roles
+      first_name
+      last_name
+      email
+      created_at
+    }
   }
 }
 `;
@@ -53,6 +61,25 @@ export const getIssues = gql`
         created_at
       }
     }
+	}
+`;
+
+export const deleteIssue = gql`
+	mutation deleteIssue($id: Float!) {
+		deleteIssue(id: $id) {
+			id
+			name
+		}
+	}
+`;
+
+export const updateIssueContent = gql`
+	mutation updateIssueContent($id: Float!, $name: String!, $description: String!) {
+		updateIssueContent(id: $id, name: $name, description: $description) {
+			id
+			name
+      description
+		}
 	}
 `;
 
