@@ -32,7 +32,7 @@ const MenuBurger = ({ setOpenMenu }) => {
       Accueil
     </NavLink>
 
-    <NavLink
+    {/* <NavLink
       to="/organization"
       className={`text-black text-2xl font-bold mb-4 ${currentLoc === '/organization' ? 'border-b-2 border-b-secondary_color' : ''}`}
       onClick={() => {
@@ -41,7 +41,7 @@ const MenuBurger = ({ setOpenMenu }) => {
       }}
     >
       Organisation
-    </NavLink>
+    </NavLink> */}
 
     <NavLink
       to="/projects"

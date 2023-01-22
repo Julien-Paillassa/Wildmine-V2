@@ -1,6 +1,6 @@
 import React from 'react';
 
-const DisplayIssuesValues = ({ issue, issueIndex, issues }) => {
+const DisplayIssuesValues = ({ issue, issues }) => {
   let priorityColor;
   let statusColor;
 
@@ -16,7 +16,7 @@ const DisplayIssuesValues = ({ issue, issueIndex, issues }) => {
 
 
 
-  return <div className={`grid grid-cols-7 p-4 text-xs sm:text-sm md:text-base bg-grey_light text-wildmine_black shadow-md text-center border relative -z-10 ${issueIndex === issues.length - 1 ? 'rounded-b-lg' : 'border-b-black'}`}>
+  return <div className={`grid grid-cols-7 p-4 text-xs sm:text-sm md:text-base bg-grey_light text-wildmine_black shadow-md text-center border relative -z-10 border-b-black`}>
     <div className='py-2 px-4 bg-wildmine_black rounded-lg mx-auto'>
       <p className='font-extrabold text-secondary_color'>#{issue.id}</p>
     </div>
@@ -27,10 +27,13 @@ const DisplayIssuesValues = ({ issue, issueIndex, issues }) => {
 
     <p className='italic'>{issue.project_name}</p>
 
-    <p className='italic'>{`${issue.description.slice(0, 20)}...`}</p>
+    {/* <p className='italic'>{`${issue.description.slice(0, 20)}...`}</p> */}
 
-    <div className={`${statusColor} w-[25px] h-[25px] border rounded-full mx-auto`}/>
+    {/* <div className={`${statusColor} w-[25px] h-[25px] border rounded-full mx-auto`}/> */}
+    <p className='italic'>{issue.status}</p>
 
+    <p className='italic'>{issue.user_assigned.first_name} {issue.user_assigned.last_name} </p>
+    
     <p className='italic'>{newDate.toLocaleDateString("fr")}</p>
 
   </div>;

@@ -3,6 +3,7 @@ import smiley from '../../../images/smiley.png';
 import { NavLink } from 'react-router-dom';
 
 const DisplayProject = ({ setDisplayHover, index, displayHover, project, isMobile }) => {
+  console.log(project)
   return (
       <div
         onMouseEnter={() => setDisplayHover(index + 1)}
@@ -23,7 +24,7 @@ const DisplayProject = ({ setDisplayHover, index, displayHover, project, isMobil
           }
 
           <img
-            src={project.images ? `/images/${project.images[project.images.length - 1].name}` : smiley}
+            src={project.images ? `/images/${project.images[project.images.length - 1].name}` : `/images/luffy's flag.jpg`}
             alt="Sélection du projet"
           />
         </NavLink>

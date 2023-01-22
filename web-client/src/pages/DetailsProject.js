@@ -6,10 +6,12 @@ import { deleteProject, getProjectById } from "../graphql/Project.js";
 import smiley from '../images/smiley.png';
 import Button from '../components/Button';
 import CreateIssue from './components/issues/CreateIssue';
-import { getIssuesByProjectId } from '../graphql/Issue';
+import { deleteIssue, getIssuesByProjectId } from '../graphql/Issue';
 import Issues from './Issues';
 import AddUserToProject from './components/projects/AddUserToProject';
 import UpdateContent from './components/projects/UpdateContent';
+import DisplayIssuesTitle from './components/issues/DisplayIssuesTitle';
+import DisplayIssuesValues from './components/issues/DisplayIssuesValues';
 
 const imagesProject = [
 	{ id: 1, url: 'https://www.consoglobe.com/wp-content/uploads/2015/12/concours-animaux-sauvages-drole-1.jpg.webp' },
@@ -61,17 +63,28 @@ const DetailsProject = ({ actualUser }) => {
 
   const issuesQuery = useQuery(getIssuesByProjectId, { variables: { projectId: parseInt(id) } });
 
-  const [suppression] = useMutation( deleteProject );
+  const { loading: loading1, error: error1, data: data1 } = useQuery(getIssuesByProjectId, { variables: { projectId: parseInt(id) } });
+
+  const [suppressionProject] = useMutation( deleteProject );
+  const [suppressionIssue] = useMutation( deleteIssue );
 
   const onSubmit = (event) => {
 		event.preventDefault();
-    console.log(parseInt(id))
 
-		suppression({
+		suppressionProject({
 			variables: {
         id: parseInt(id),				
 			},        
 		});
+
+    data1.getIssuesByProjectId.forEach(issue => {     
+      suppressionIssue({
+        variables: {
+          id: parseInt(issue.id),				
+        },        
+      });
+    });
+
     window.setTimeout(function () {
       window.location.href = "http://localhost:3000/projects";
     }, 500);
@@ -84,7 +97,7 @@ const DetailsProject = ({ actualUser }) => {
 	if (issuesQuery.loading) return <div className='mx-auto'>Charngement ...</div>
   
   const images = data.getProjectById.images;
-  console.log(images);
+
   return (
     <div className="detail-project-container">
       <div className='flex justify-between mb-4'>
@@ -110,9 +123,14 @@ const DetailsProject = ({ actualUser }) => {
             </h3>
             
             <div className='flex'>
-              {collaboratorsProject && collaboratorsProject.map(collaborator =>
-                <img key={collaborator.id} className="rounded-full h-8 w-8 mx-2" src={collaborator.img} alt="collabo 1"/>
+              <ul>
+              {data.getProjectById.user_assigned && data.getProjectById.user_assigned.map(collaborator =>
+              
+                <li>- {collaborator.first_name} {collaborator.last_name}</li>
+              
+                // <img key={collaborator.id} className="rounded-full h-8 w-8 mx-2" src={collaborator.img} alt="collabo 1"/>
               )}
+              </ul>
             </div>
 
           </div>
@@ -175,21 +193,31 @@ const DetailsProject = ({ actualUser }) => {
             <img
               key="image"
               className="object-none object-center"
-              src={`/images/luffy's flag.jpg`}
+              src={`/images/${images[0].name}`}
               alt="Projet"
             />
           </CarouselItem>
       </Carousel>
       
-      {!issuesQuery.loading && issuesQuery.data.getIssuesByProjectId[0] && !issuesQuery.error
+      {!loading1 && data1.getIssuesByProjectId[0] && !error1
       ? <div>
-        <p className='font-black text-2xl pt-20'>Tickets en cours</p>
-        
-        <Issues issues={issuesQuery.data.getIssuesByProjectId}/>
-      </div>
-      : <p className='mx-auto text-xl font-bold tracking-wide py-20'>Aucun ticket associé à ce projet pour le moment</p>
-      }
-      <div>
+      <p className='font-black text-2xl pt-20'>Tickets en cours</p>
+      
+      <DisplayIssuesTitle/>
+
+    <div>
+      {data1.getIssuesByProjectId
+      ? data1.getIssuesByProjectId.map((issue) => (
+        <NavLink to={`/issue/${issue.id}`}>
+          <DisplayIssuesValues  issue={issue} issues={data1.getIssuesByProjectId}/>
+        </NavLink>
+      ))
+    : <p className='text-xl font-bold'>Aucun ticket ne vous est assigné pour le moment</p>}
+    </div>
+    </div>
+    : <p className='mx-auto text-xl font-bold tracking-wide py-20'>Aucun ticket associé à ce projet pour le moment</p>
+    }
+    <div>
         {!showFiveTickets
             ? <button
               className="bg-blue_green_flash text-black rounded-full flex items-center justify-center"

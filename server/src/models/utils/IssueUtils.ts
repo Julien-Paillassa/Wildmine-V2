@@ -26,7 +26,7 @@ class IssueUtils extends Issue {
       issue.user_assigned = user;
       issue.created_at = created_at;
       issue.updated_at = updated_at;
-  
+
       await issue.save();
   
       return issue;
@@ -47,12 +47,20 @@ class IssueUtils extends Issue {
   }
 
   static async assignUserToIssue({ email, issueId }: AssignUserInput) {
-    let user = await UserUtils.getUserByEmail({ email });
+    
 
-    let issue = await this.getIssueById({ id: issueId });
+    const user = await UserUtils.getUserByEmail({ email });
+    
+    const issue = await this.getIssueById({ id: issueId });
 
     issue.user_assigned = user;
     user.issues_assigned = user.issues_assigned ? [...user.issues_assigned, issue] : [issue];
+
+    console.log("toto")
+    console.log(issue)
+    console.log("tutu")
+    console.log(user)
+    console.log("tata")
 
     await issue.save();
     await user.save();

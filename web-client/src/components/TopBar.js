@@ -39,13 +39,13 @@ const TopBar = () => {
 					Accueil
 				</NavLink>
 
-				<NavLink
+				{/* <NavLink
 					to="/organization"
 					className={`topbar-menu-link ${currentLoc === '/organization' ? 'topbar-menu-link-selected' : ''}`}
 					onClick={() => setCurrentLoc('/organization')}
 				>
 					Organisation
-				</NavLink>
+				</NavLink> */}
 
 				<NavLink
 					to="/projects"

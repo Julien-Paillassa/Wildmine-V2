@@ -103,6 +103,14 @@ export const getIssuesByProjectId = gql`
         last_name
         created_at
       }
+      user_assigned {
+        id
+        roles
+        first_name
+        email
+        last_name
+        created_at
+      }
     }
   }
 `;

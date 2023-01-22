@@ -8,9 +8,10 @@ const DisplayIssuesTitle = () => (
     <p>Priorité</p>
     <p>Nom du ticket</p>
     <p>Projet</p>
-    <p className='hidden sm:block'>Description</p>
-    <p className='block sm:hidden'>Descrip-<br/>tion</p>
+    {/* <p className='hidden sm:block'>Description</p>
+    <p className='block sm:hidden'>Descrip-<br/>tion</p> */}
     <p>Statut</p>
+    <p>Assigné à</p>
     <p>Date</p>
   </div>
 );

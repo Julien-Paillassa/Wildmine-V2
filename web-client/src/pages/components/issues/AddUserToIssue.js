@@ -16,7 +16,7 @@ const AddUserToIssue = ({ setDisplayAddUserOnIssue, refetch, issueId }) => {
         setDisplayAddUserOnIssue(false);
       },
       onError: (error) => console.log(error.message),
-      refetchQueries: ["getIssuesById"],
+
     }
   );
 

@@ -6,45 +6,63 @@ import DisplayIssuesTitle from './components/issues/DisplayIssuesTitle';
 import DisplayIssuesValues from './components/issues/DisplayIssuesValues';
 import { userWithRelations } from '../graphql/UserSession';
 import { NavLink } from 'react-router-dom';
+import { getIssues } from '../graphql/Issue';
 
 const Issues = () => {
 	const { loading, data } = useQuery(userWithRelations);
 
+  const { loading: loading1, data: data1 } = useQuery(getIssues);
+
   const [foundIssues, setFoundIssues] = useState([]);
   const [valuesToCompare, setValuesToCompare] = useState('');
 
-  if (loading) return <div className='mx-auto'>Chargement...</div>
+  if (loading1) return <div className='mx-auto'>Chargement...</div>
 
   const filter = (e) => {
     const keyword = e.target.value;
 
     if (keyword !== '') {
-      const results = data.userWithRelations.issues_assigned.filter((issue) => {
+      const results = data1.issues.filter((issue) => {
         return issue.name.toLowerCase().startsWith(keyword.toLowerCase());
       });
       setFoundIssues(results);
 
     } else {
-      setFoundIssues(data.userWithRelations.issues_assigned);
+      setFoundIssues(data1.issues);
     }
     setValuesToCompare(keyword);
   };
 
-  if (foundIssues.length === 0 && !valuesToCompare && data.userWithRelations.issues_assigned.length > 0) {
-    setFoundIssues(data.userWithRelations.issues_assigned);
+  const filter1 = (e) => {
+    const keyword = e.target.value;
+
+    if (keyword !== '') {
+      const results = data1.issues.filter((issue) => {
+        return issue.project_name.toLowerCase().startsWith(keyword.toLowerCase());
+      });
+      setFoundIssues(results);
+
+    } else {
+      setFoundIssues(data1.issues);
+    }
+    setValuesToCompare(keyword);
+  };
+
+  if (foundIssues.length === 0 && !valuesToCompare && data1.issues.length > 0) {
+    setFoundIssues(data1.issues);
   }
-  
+  console.log(data1.issues)
   return <div>
 
       <SearchButton
         value={valuesToCompare}
-        onChange={filter}
+        onChange={filter1}
       />
 
     <DisplayIssuesTitle/>
 
     <div>
-      {data.userWithRelations.issues_assigned
+      {data1.issues
       ? foundIssues.map((issue, issueIndex) => (
         <NavLink to={`/issue/${issue.id}`}>
           <DisplayIssuesValues key={issueIndex} issue={issue} issueIndex={issueIndex} issues={foundIssues}/>

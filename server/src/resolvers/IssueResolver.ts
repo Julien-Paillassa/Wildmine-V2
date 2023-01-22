@@ -17,7 +17,7 @@ import UpdateContentInput from './input/issues/UpdateContentInput';
 class IssueResolver {
   @Query(() => [Issue])
 	async issues() {
-		return await Issue.find({ relations: ["user", "user_assigned"] });
+		return await Issue.find({ relations: ["user_assigned", "user"] });
 	}
 
 	@Mutation(() => Issue)

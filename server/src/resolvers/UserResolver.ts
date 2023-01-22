@@ -12,7 +12,7 @@ import GetUserByEmailInput from "./input/user/getUserByEmailInput";
 class UserResolver {
   @Query(() => [User])
   async users() {
-    return await User.find({ relations: ["project_assigned"] });
+    return await User.find({ relations: ["project_assigned", "issues_assigned"] });
   }
 
   @Mutation(() => User)

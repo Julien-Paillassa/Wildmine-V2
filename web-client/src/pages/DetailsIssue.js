@@ -69,6 +69,8 @@ const DetailsIssue = () => {
 
   const issue = data.getIssueById;
 
+  console.log(issue)
+
   if (status) {
     updateStatus({
       variables: {
