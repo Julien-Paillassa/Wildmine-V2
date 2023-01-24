@@ -60,7 +60,6 @@ describe("UserResolver", () => {
 					name
 					description
 					created_at
-					projectPictureName
 				}
 			}
 		}`; 
@@ -162,7 +161,6 @@ describe('UserResolver', () => {
 					name
 					description
 					created_at
-					projectPictureName
 				}
 			}
 		}`;

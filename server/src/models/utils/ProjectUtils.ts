@@ -9,13 +9,12 @@ import User from "../User";
 import UpdateContentInput from "../../resolvers/input/project/UpdateContentInput";
 
 class ProjectUtils extends Project {
-  static async createProject({ name, description, created_at, projectPictureName }: CreateProjectInput) {
+  static async createProject({ name, description, created_at }: CreateProjectInput) {
       const project = new Project();
   
       project.name = name;
       project.description = description;
       project.created_at = created_at;
-      project.projectPictureName = projectPictureName
   
       await project.save();
   

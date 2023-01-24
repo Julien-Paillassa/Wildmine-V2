@@ -17,19 +17,18 @@ import UpdateContentInput from './input/project/UpdateContentInput';
 class ProjectResolver {
   @Query(() => [Project])
 	async projects() {
-		return await Project.find({ relations: ["user_assigned", "images"]});
+		return await Project.find({ relations: ["user_assigned", "images", "issues"]});
 	}
 
 	@Mutation(() => Project)
 		async createProject(
 			@Args()
-			{ name, description, created_at, projectPictureName, images }: CreateProjectInput
+			{ name, description, created_at, images }: CreateProjectInput
 		) 	{
 				const projectCreated = await ProjectUtils.createProject({
 					name,
 					description,
 					created_at,
-					projectPictureName,
 					images
 				})
 

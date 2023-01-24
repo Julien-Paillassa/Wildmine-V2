@@ -4,7 +4,7 @@ import {
 	Column,
 	Entity,
 	OneToMany,
-	// JoinColumn,
+	JoinColumn,
 	JoinTable,
 	ManyToMany,
 	// ManyToOne,
@@ -12,6 +12,7 @@ import {
 } from 'typeorm';
 
 import Image from './Image';
+import Issue from './Issue';
 // import User from './User';
 import User from './User';
 // import Organization from './Organization';
@@ -36,13 +37,13 @@ class Project extends BaseEntity {
 	@Field()
 	created_at!: string;
 
-	@Column()
-	@Field()
-	projectPictureName?: string;
-
 	@OneToMany(() => Image, image => image.project, { onDelete: 'CASCADE' })
 	@Field(() => [Image], { nullable: true })
 	images?: Image[];
+
+	@OneToMany(() => Issue, issue => issue.project, { onDelete: 'CASCADE' })
+	@Field(() => [Issue], { nullable: true })
+	issues?: Issue[];
 
 	@ManyToMany(() => User, (user) => user.id)
 	@JoinTable()

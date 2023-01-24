@@ -45,17 +45,6 @@ class User extends BaseEntity {
 	@OneToMany(() => Issue, (issue) => issue.user_assigned)
 	@Field(() => [Issue], { nullable: true })
 	issues_assigned?: Issue[];
-	
-
-	// @ManyToOne(() => Organization, (organization) => organization.id)
-	// @JoinColumn({ name: 'organization_id' })
-	// @Field()
-	// organization_id!: number;
-
-	// @ManyToOne(() => Color, (color) => color.id)
-	// @JoinColumn({ name: 'color_id' })
-	// @Field()
-	// color_id!: number;
 }
 
 export default User;

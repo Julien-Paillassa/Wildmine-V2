@@ -14,7 +14,7 @@ export default async (url: string, logging = false) => {
 	await createConnection({
 		type: "postgres",
     	url,
-		entities: [User, Organization, Project, Issue, Color, Comment, File, Session, Image],
+		entities: [User, Project, Issue, File, Session, Image],
 		synchronize: true,
     logging,
 	});

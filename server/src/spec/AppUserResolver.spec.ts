@@ -44,7 +44,6 @@ describe("UserResolver", () => {
 					name
 					description
 					created_at
-					projectPictureName
 				}
 			}
     }`;

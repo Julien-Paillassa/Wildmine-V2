@@ -4,6 +4,7 @@ import {
     Entity,
     PrimaryColumn,
     ManyToOne,
+    OneToOne,
     JoinColumn
   } from 'typeorm';
 import User from './User';
@@ -15,7 +16,7 @@ class Session extends BaseEntity {
     @Field()
     uid!: string;
 
-    @ManyToOne(() => User, (user) => user.id)
+    @OneToOne(() => User, (user) => user.id)
     @JoinColumn({ name: 'user' })
     @Field()
     user!: User;

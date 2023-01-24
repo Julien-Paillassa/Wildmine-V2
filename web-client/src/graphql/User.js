@@ -14,7 +14,6 @@ export const getUser = gql`
 				name
 				description
 				created_at
-				projectPictureName
 			}
 		}
 	}

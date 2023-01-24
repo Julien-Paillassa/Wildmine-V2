@@ -11,9 +11,6 @@ class CreateProjectInput {
   @Field()
   created_at!: string;
 
-  @Field()
-  projectPictureName?: string;
-
   @Field(() => [String])
 	images?: string[];
 }

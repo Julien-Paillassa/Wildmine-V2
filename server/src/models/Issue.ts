@@ -9,6 +9,7 @@ import {
 	ManyToOne,
 	PrimaryGeneratedColumn,
 } from 'typeorm';
+import Project from './Project';
 
 import User from './User';
 
@@ -62,6 +63,10 @@ class Issue extends BaseEntity {
 	@Column()
 	@Field()
 	project_id!: number;
+
+	@ManyToOne(() => Project, (project) => project.issues)
+	@Field(() => Project, { nullable: true })
+	project!: Project;
 
 	@ManyToOne(() => User, (user) => user.id)
 	@JoinColumn({ name: 'user' })

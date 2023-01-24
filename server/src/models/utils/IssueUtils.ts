@@ -9,12 +9,15 @@ import AssignUserInput from "../../resolvers/input/issues/AssignUserInput";
 import UpdateStatusInput from "../../resolvers/input/issues/UpdateStatusInput";
 import UpdatePriorityInput from "../../resolvers/input/issues/UpdatePriorityInput";
 import UpdateContentInput from "../../resolvers/input/issues/UpdateContentInput";
+import ProjectUtils from "./ProjectUtils";
 
 class IssueUtils extends Issue {
   static async createIssue({ name, description, status, priority, project_id, sessionId, created_at, updated_at, project_name }: CreateIssueUtilsInput) {
       const issue = new Issue();
 
       const user = await SessionUtils.userInfo({ sessionId });
+      const project = await ProjectUtils.getProjectById({id: project_id});
+
   
       issue.name = name;
       issue.description = description;
@@ -23,11 +26,18 @@ class IssueUtils extends Issue {
       issue.priority = priority;
       issue.project_id = project_id;
       issue.user = user;
+      issue.project = project;
       issue.user_assigned = user;
       issue.created_at = created_at;
       issue.updated_at = updated_at;
 
       await issue.save();
+
+      project.issues = project.issues ? [...project.issues, issue] : [issue];
+
+      await project.save();
+
+      console.log(project)
   
       return issue;
   }

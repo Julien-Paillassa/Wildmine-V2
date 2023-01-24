@@ -6,7 +6,6 @@ export const getProjects = gql`
 			id
 			name
 			description
-			projectPictureName
 			created_at
 			user_assigned {
 				id
@@ -32,7 +31,6 @@ export const getProjectById = gql`
 			name
 			description
 			created_at
-			projectPictureName
 			images {
 				id
 				name
@@ -75,12 +73,11 @@ export const updateProjectContent = gql`
 `;
 
 export const createProject = gql`
-	mutation createProject($name: String!, $description: String!, $createdAt: String!, $projectPictureName: String!, $images: [String!]!) {
-		createProject(name: $name, description: $description, created_at: $createdAt, projectPictureName: $projectPictureName, images: $images) {
+	mutation createProject($name: String!, $description: String!, $createdAt: String!, $images: [String!]!) {
+		createProject(name: $name, description: $description, created_at: $createdAt, images: $images) {
 			id
 			name
 			description
-			projectPictureName
 			created_at
 			images {
 				id 
@@ -104,7 +101,6 @@ mutation assignUserToProject($email: String!, $projectId: Float!) {
     name
     description
     created_at
-    projectPictureName
     user_assigned {
       id
       roles

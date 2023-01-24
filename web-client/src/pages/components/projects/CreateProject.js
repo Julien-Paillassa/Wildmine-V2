@@ -46,7 +46,6 @@ const CreateProject = ({ setDisplayCreation }) => {
 				name,
 				description,
 				createdAt: new Date().toJSON(),
-				projectPictureName: '',
 				images: pictures			
 			},
 		});

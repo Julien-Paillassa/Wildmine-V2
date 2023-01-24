@@ -10,7 +10,8 @@
 		"build": "tsc",
 		"build:watch": "tsc -w",
 		"start": "node build/.",
-		"start:watch": "npm run build && (npm run build:watch & nodemon --inspect build/.)"
+		"start:watch": "npm run build && (npm run build:watch & nodemon --inspect build/.)",
+		"typeorm": "typeorm-ts-node-commonjs"
 	},
 	"author": "",
 	"license": "ISC",
@@ -50,6 +51,7 @@
 		"babel-jest": "^27.5.1",
 		"babel-plugin-transform-typescript-metadata": "^0.3.2",
 		"jest": "^27.5.1",
-		"nodemon": "^2.0.15"
+		"nodemon": "^2.0.15",
+		"ts-node": "^10.9.1"
 	}
 }

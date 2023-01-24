@@ -27,7 +27,6 @@ export const userInfo = gql`
 				name
 				description
 				created_at
-				projectPictureName
 			}
 			issues_assigned {
 				id
@@ -58,7 +57,6 @@ query userWithRelations {
       name
       description
       created_at
-      projectPictureName
 	  images {
 		id
 		name
