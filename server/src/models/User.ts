@@ -1,9 +1,7 @@
 import { Field, ID, ObjectType } from 'type-graphql';
 import { BaseEntity, Column, Entity, ManyToMany, JoinTable, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 
-import Color from './Color';
 import Issue from './Issue';
-import Organization from './Organization';
 import Project from './Project';
 
 @Entity()
@@ -12,10 +10,6 @@ class User extends BaseEntity {
 	@PrimaryGeneratedColumn()
 	@Field(() => ID)
 	id!: number;
-
-	@Column()
-	@Field()
-	roles!: string;
 
 	@Column()
 	@Field()

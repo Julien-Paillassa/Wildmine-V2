@@ -13,9 +13,6 @@ class UpdateUserInput {
 
   @Field()
   email!: string;
-
-  @Field()
-  roles!: string;
 }
 
 export default UpdateUserInput;

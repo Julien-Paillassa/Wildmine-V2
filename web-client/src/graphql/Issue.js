@@ -14,7 +14,6 @@ mutation createIssue($name: String!, $description: String!, $projectName: String
     project_id
     user {
       id
-      roles
       first_name
       last_name
       email
@@ -22,7 +21,6 @@ mutation createIssue($name: String!, $description: String!, $projectName: String
     }
     user_assigned {
       id
-      roles
       first_name
       last_name
       email
@@ -46,7 +44,6 @@ export const getIssues = gql`
       project_id
       user {
         id
-        roles
         first_name
         last_name
         email
@@ -54,7 +51,6 @@ export const getIssues = gql`
       }
       user_assigned {
         id
-        roles
         first_name
         last_name
         email
@@ -97,7 +93,6 @@ export const getIssuesByProjectId = gql`
       project_id
       user {
         id
-        roles
         first_name
         email
         last_name
@@ -105,7 +100,6 @@ export const getIssuesByProjectId = gql`
       }
       user_assigned {
         id
-        roles
         first_name
         email
         last_name
@@ -129,14 +123,12 @@ export const getIssueById = gql`
       project_id
       user {
         id
-        roles
         first_name
         last_name
         email
       }
       user_assigned {
         id
-        roles
         first_name
         last_name
         email
@@ -160,7 +152,6 @@ export const assignUserToIssue = gql`
       project_id
       user_assigned {
         id
-        roles
         first_name
         last_name
         email
@@ -200,7 +191,6 @@ export const updateIssueStatus = gql`
       project_id
       user {
         id
-        roles
         first_name
         last_name
         email
@@ -208,7 +198,6 @@ export const updateIssueStatus = gql`
       }
       user_assigned {
         id
-        roles
         first_name
         last_name
         email
@@ -232,7 +221,6 @@ export const updateIssuePriority = gql`
       project_id
       user {
         id
-        roles
         first_name
         last_name
         email
@@ -240,7 +228,6 @@ export const updateIssuePriority = gql`
       }
       user_assigned {
         id
-        roles
         first_name
         last_name
         email

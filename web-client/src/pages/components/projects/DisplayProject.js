@@ -3,7 +3,6 @@ import smiley from '../../../images/smiley.png';
 import { NavLink } from 'react-router-dom';
 
 const DisplayProject = ({ setDisplayHover, index, displayHover, project, isMobile }) => {
-  console.log(project)
   return (
       <div
         onMouseEnter={() => setDisplayHover(index + 1)}

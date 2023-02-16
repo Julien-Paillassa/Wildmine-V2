@@ -19,8 +19,6 @@ import MobileBar from './components/MobileBar.js';
 
 const App = () => {
 	const { data, refetch } = useQuery(userInfo);
-
-	console.log(data)
 	
 	const isMobile = window.innerWidth <= 1024;
 

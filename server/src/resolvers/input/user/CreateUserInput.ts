@@ -15,9 +15,6 @@ class CreateUserInput {
   password!: string;
 
   @Field()
-  roles!: string;
-
-  @Field()
   created_at!: string;
 }
 

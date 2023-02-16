@@ -36,8 +36,6 @@ class IssueUtils extends Issue {
       project.issues = project.issues ? [...project.issues, issue] : [issue];
 
       await project.save();
-
-      console.log(project)
   
       return issue;
   }
@@ -65,12 +63,6 @@ class IssueUtils extends Issue {
 
     issue.user_assigned = user;
     user.issues_assigned = user.issues_assigned ? [...user.issues_assigned, issue] : [issue];
-
-    console.log("toto")
-    console.log(issue)
-    console.log("tutu")
-    console.log(user)
-    console.log("tata")
 
     await issue.save();
     await user.save();

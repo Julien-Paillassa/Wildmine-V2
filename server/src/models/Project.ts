@@ -13,10 +13,7 @@ import {
 
 import Image from './Image';
 import Issue from './Issue';
-// import User from './User';
 import User from './User';
-// import Organization from './Organization';
-// import Issue from './Issue';
 
 @Entity()
 @ObjectType()

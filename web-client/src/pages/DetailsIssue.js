@@ -53,7 +53,6 @@ const DetailsIssue = () => {
 
   const onSubmit = (event) => {
 		event.preventDefault();
-    console.log(parseInt(id))
 
 		suppression({
 			variables: {
@@ -68,8 +67,6 @@ const DetailsIssue = () => {
   if (error) return `Error! ${error.message}`;
 
   const issue = data.getIssueById;
-
-  console.log(issue)
 
   if (status) {
     updateStatus({

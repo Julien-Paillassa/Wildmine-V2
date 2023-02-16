@@ -9,7 +9,6 @@ export const getProjects = gql`
 			created_at
 			user_assigned {
 				id
-				roles
 				first_name
 				last_name
 				email
@@ -38,7 +37,6 @@ export const getProjectById = gql`
 			  }
 			user_assigned {
 				id
-				roles
 				first_name
 				last_name
 				email
@@ -103,7 +101,6 @@ mutation assignUserToProject($email: String!, $projectId: Float!) {
     created_at
     user_assigned {
       id
-      roles
       first_name
       last_name
       email

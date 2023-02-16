@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { useQuery, useMutation } from "@apollo/client";
-import { Redirect } from 'react-router-dom';
+import { NavLink, Redirect } from 'react-router-dom';
 import Issues from './Issues';
 import DisplayProject from './components/projects/DisplayProject';
 import { userWithRelations, deleteSession } from '../graphql/UserSession';
 import Button from '../components/Button';
 import UpdateUser from './components/users/UpdateUser';
+import DisplayIssuesTitle from './components/issues/DisplayIssuesTitle';
+import DisplayIssuesValues from './components/issues/DisplayIssuesValues';
 
 const Settings = () => {
 
@@ -44,11 +46,6 @@ const Settings = () => {
 
   const actualUser = data.userWithRelations;
 
-  
-
-  console.log(data.userWithRelations)
-
-
   return (
     <div className="settings-container">
       <div className="grid grid-cols-10">
@@ -70,7 +67,6 @@ const Settings = () => {
             <li className="infos-liste"><b>Nom : </b>{actualUser.last_name}</li>
             <li className="infos-liste"><b>Prénom : </b>{actualUser.first_name}</li>
             <li className="infos-liste"><b>Email : </b>{actualUser.email}</li>
-            <li className="infos-liste"><b>Statut : </b>{actualUser.roles}</li>
           </ul>
           <form onSubmit={onSubmit} className="w-2/3 mx-auto">
             <div className="text-center">
@@ -105,10 +101,23 @@ const Settings = () => {
             <h3 className="issues-user-title">Vos Tickets</h3>
           </div>
         </div>
-        {actualUser.issues_assigned 
+        {actualUser.issues_assigned.length > 0
           ? <div>
-              <Issues issues={actualUser.issues_assigned }/>
+              <DisplayIssuesTitle/>
+              <div>
+                {actualUser.issues_assigned
+                  ? actualUser.issues_assigned.map((issue) => (
+                    <NavLink to={`/issue/${issue.id}`}>
+                      <DisplayIssuesValues  issue={issue} issues={actualUser}/>
+                    </NavLink>
+                  ))
+                  : <p className='text-xl font-bold'>Aucun ticket ne vous est assigné pour le moment</p>
+                }
+              </div> 
             </div>
+            // <div>
+            //   <Issues issues={actualUser.issues_assigned }/>
+            // </div>
           : <p className='mx-auto text-xl font-bold tracking-wide py-20'>Aucun ticket ne vous est assigné</p>
         }
       </div>

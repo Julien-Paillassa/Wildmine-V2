@@ -51,7 +51,7 @@ const Issues = () => {
   if (foundIssues.length === 0 && !valuesToCompare && data1.issues.length > 0) {
     setFoundIssues(data1.issues);
   }
-  console.log(data1.issues)
+
   return <div>
 
       <SearchButton

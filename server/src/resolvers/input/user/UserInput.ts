@@ -9,9 +9,6 @@ class UserInput {
   id!: number;
 
   @Field()
-  roles!: string;
-
-  @Field()
   first_name!: string;
 
   @Field()

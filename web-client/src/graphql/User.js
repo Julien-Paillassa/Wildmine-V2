@@ -6,7 +6,6 @@ export const getUser = gql`
 			id
 			first_name
 			last_name
-			roles
 			email
 			created_at
 			project_assigned {
@@ -20,12 +19,11 @@ export const getUser = gql`
 `;
 
 export const setUser = gql`
-	mutation createUser($firstName: String!, $lastName: String!, $roles: String!, $email: String!, $password: String!, $createdAt: String!) {
-		createUser(first_name: $firstName, last_name: $lastName, roles: $roles, email: $email, password: $password, created_at: $createdAt) {
+	mutation createUser($firstName: String!, $lastName: String!, $email: String!, $password: String!, $createdAt: String!) {
+		createUser(first_name: $firstName, last_name: $lastName, email: $email, password: $password, created_at: $createdAt) {
 			id
 			first_name
 			last_name
-			roles
 			email
 			created_at
 		}
@@ -33,13 +31,42 @@ export const setUser = gql`
 `;
 
 export const updateUser = gql`
-	mutation updateUser($id: Float!, $firstName: String!, $lastName: String!, $roles: String!, $email: String!) {
-		updateUser(id: $id, first_name: $firstName, last_name: $lastName, roles: $roles, email: $email) {
+	mutation updateUser($id: Float!, $firstName: String!, $lastName: String!, $email: String!) {
+		updateUser(id: $id, first_name: $firstName, last_name: $lastName, email: $email) {
 			id
 			first_name
 			last_name
-			roles
 			email
 		}
 	}
 `;
+
+export const getUserByEmail = gql`
+	query getUserByEmail($email: String!) {
+		getUserByEmail(email: $email) {
+			id
+			first_name
+			last_name
+			email
+			created_at
+			project_assigned {
+				id
+				name
+				description
+				created_at
+			}
+			issues_assigned {
+				id
+				name
+				description
+				created_at
+				updated_at
+				status
+				priority
+				project_name
+				project_id
+			  }
+		}
+	}
+`;
+

@@ -18,9 +18,9 @@ class UserResolver {
   @Mutation(() => User)
   async createUser(
     @Args()
-    { first_name, last_name, email, password, roles,created_at }: CreateUserInput
+    { first_name, last_name, email, password, created_at }: CreateUserInput
   ) {
-    return UserUtils.createUser({first_name,last_name, email, password,roles, created_at,});
+    return UserUtils.createUser({first_name,last_name, email, password, created_at,});
   }
 
   @Mutation(() => User)
@@ -31,7 +31,6 @@ class UserResolver {
       first_name,
       last_name,
       email,
-      roles
     }: UpdateUserInput
   ) {
     return UserUtils.updateUser({
@@ -39,7 +38,6 @@ class UserResolver {
       first_name,
       last_name,
       email,
-      roles
     });
   }
 

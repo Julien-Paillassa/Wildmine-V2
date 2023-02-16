@@ -6,7 +6,6 @@ export const signIn = gql`
 			id
 			first_name
 			last_name
-			roles
 			email
 			created_at
 		}
@@ -17,7 +16,6 @@ export const userInfo = gql`
 	query userInfo {
 		userInfo {
 			id
-			roles
 			first_name
 			last_name
 			email
@@ -47,7 +45,6 @@ export const userWithRelations = gql`
 query userWithRelations {
   userWithRelations {
     id
-    roles
     first_name
     last_name
     email

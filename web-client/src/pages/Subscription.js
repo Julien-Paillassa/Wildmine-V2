@@ -29,7 +29,6 @@ const Subsription = () => {
             lastName,
             email,
             password,
-            roles: 'admin',
             createdAt: new Date().toJSON()
         }});
     };

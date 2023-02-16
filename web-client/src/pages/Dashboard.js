@@ -2,6 +2,9 @@ import React from 'react';
 import diagram from '../assets/images/diagram.png';
 import { useQuery } from "@apollo/client";
 import { userWithRelations } from '../graphql/UserSession';
+import { NavLink } from 'react-router-dom';
+import DisplayIssuesTitle from './components/issues/DisplayIssuesTitle';
+import DisplayIssuesValues from './components/issues/DisplayIssuesValues';
 
 const Dashboard = ({ actualUser }) => {
 	const { loading, error } = useQuery(userWithRelations);
@@ -10,6 +13,8 @@ const Dashboard = ({ actualUser }) => {
 	if (loading) return 'Loading...';
 
 	if (error) return `Error! ${error.message}`;
+
+	console.log(actualUser.issues_assigned)
 	return (
 		<div className="dashboard-container">
 			{actualUser ? (
@@ -19,12 +24,10 @@ const Dashboard = ({ actualUser }) => {
 							<div className="max-w-sm rounded overflow-hidden shadow-lg bg-secondary_color columns-2">
 								<img className="w-full" src={diagram} alt="diagram" />
 								<div className="px-6 py-4">
-									<div className="font-bold text-xl mb-2 font-chaney">Résumé de mes tickets</div>
 									<div className="grid grid-cols-2 mt-6 mb-6">
-										<p className="text_color_light">Non traités En cours Résolus</p>
 										<p className="text_color_light">
-											Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus quia, nulla! Maiores et
-											perferendis eaque, exercitationem praesentium nihil.
+											Vous pourez bient dans la version 2.0 de WildMine voir l'avancement des diverses projets
+											dans ce graphique camanbert, ainsi que des prévisions sur les deadline de projet.
 										</p>
 									</div>
 								</div>
@@ -34,138 +37,80 @@ const Dashboard = ({ actualUser }) => {
 							<p className="font-bold text-xl mb-2 text_color_light font-chaney divide-y divide-solid">
 								Projets auxquels je suis rattaché
 							</p>
+							
 							<div className="relative overflow-x-auto shadow-md sm:rounded-lg">
-								<table className="w-full text-sm border text-left text-gray-500 dark:text-gray-400">
-									<thead className="text-xs text-wildmine_black uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-										<tr>
-											<th scope="col" className="px-6 py-3">
-												Projet
-											</th>
-											<th scope="col" className="px-6 py-3">
-												Entreprise
-											</th>
-											<th scope="col" className="px-6 py-3">
-												Catégorie
-											</th>
-											<th scope="col" className="px-6 py-3">
-												Date
-											</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr className="text-text_color_light border-b dark:bg-gray-800 dark:border-gray-700">
-											<th scope="row" className="px-6 py-4 font-medium dark:text-white whitespace-nowrap">
-												plat learning
-											</th>
-											<td className="px-6 py-4">SGB</td>
-											<td className="px-6 py-4">dev</td>
-											<td className="px-6 py-4">15/09/2020</td>
-										</tr>
-										<tr className="text-text_color_light border-b dark:bg-gray-800 dark:border-gray-700">
-											<th scope="row" className="px-6 py-4 font-medium dark:text-white whitespace-nowrap">
-												Notre projet
-											</th>
-											<td className="px-6 py-4">OPC</td>
-											<td className="px-6 py-4">dev</td>
-											<td className="px-6 py-4">12/06/2022</td>
-										</tr>
-										<tr className="text-text_color_light dark:bg-gray-800">
-											<th scope="row" className="px-6 py-4 font-medium dark:text-white whitespace-nowrap">
-												Plat e-commerce
-											</th>
-											<td className="px-6 py-4">Smiling Green bean</td>
-											<td className="px-6 py-4">dev</td>
-											<td className="px-6 py-4">04/05/2020</td>
-										</tr>
-									</tbody>
-								</table>
+							{actualUser.project_assigned 
+								? actualUser.project_assigned.map((project) => {
+									return <table className="w-full text-sm border text-left text-gray-500 dark:text-gray-400">
+										<thead className="text-xs text-wildmine_black uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+											<tr>
+												<th scope="col" className="px-6 py-3">
+													Projet
+												</th>
+												<th scope="col" className="px-6 py-3">
+													Description
+												</th>
+												<th scope="col" className="px-6 py-3">
+													Date
+												</th>
+												<th scope="col" className="px-6 py-3">
+													En cours
+												</th>
+											</tr>
+										</thead>
+										<tbody>
+										
+											<tr className="text-text_color_light border-b dark:bg-gray-800 dark:border-gray-700">
+											<NavLink to={"/detailsProject/" + project.id }>
+												<th scope="row" className="px-6 py-4 font-medium dark:text-white whitespace-nowrap">
+													{project.name}
+												</th>
+											</NavLink>
+												<td className="px-6 py-4">{project.description}</td>
+												<td className="px-6 py-4">{new Date(project.created_at).toLocaleDateString("fr")}</td>
+												{actualUser.issues_assigned 
+													? <td className="px-6 py-4">Oui</td>
+													: <td className="px-6 py-4">Non</td>
+												}
+												
+											</tr>
+										
+										</tbody>
+									</table>
+									})
+								: <p>Aucun projet pour le moment</p>
+							}
 							</div>
 						</div>
 						<div className="col-span-3">
 							<p className="font-bold text-xl text_color_light mt-8 mb-12 font-chaney">Derniers tickets traités</p>
-							<div className="relative overflow-x-auto shadow-md sm:rounded-lg">
-								<table className="w-full text-sm text-left text-gray-500 dark:text-gray-400 mb-32">
-									<thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-										<tr>
-											<th scope="col" className="px-6 py-3">
-												No du ticket
-											</th>
-											<th scope="col" className="px-6 py-3">
-												Nom du ticket
-											</th>
-											<th scope="col" className="px-6 py-3">
-												Commentaire
-											</th>
-											<th scope="col" className="px-6 py-3">
-												Statut
-											</th>
-											<th scope="col" className="px-6 py-3">
-												Catégorie
-											</th>
-											<th scope="col" className="px-6 py-3">
-												Client
-											</th>
-											<th scope="col" className="px-6 py-3">
-												Date
-											</th>
-										</tr>
-									</thead>
-									<tbody className="bg-gradient-to-b from-wildmine_black to-gray-700 text-text_color_light">
-										<tr className="dark:bg-gray-800 dark:border-gray-700">
-											<th scope="row" className="px-6 py-4 font-medium dark:text-white whitespace-nowrap">
-												<span className="bg-black_badge text-secondary_color text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300 font-chaney">
-													#16257
-												</span>
-											</th>
-											<td className="px-6 py-4">Pb affichage</td>
-											<td className="px-6 py-4">Le problème résulte...</td>
-											<td className="px-6 py-4">
-												<strong className="border border-warning text-white bg-warning uppercase px-5 py-1.5 rounded-full text-[10px] tracking-wide"></strong>
-											</td>
-											<td className="px-6 py-4">dev</td>
-											<td className="px-6 py-4">OPC</td>
-											<td className="px-6 py-4">08/01/2021</td>
-										</tr>
-										<tr className="dark:bg-gray-800 dark:border-gray-700">
-											<th scope="row" className="px-6 py-4 font-medium dark:text-white whitespace-nowrap">
-												<span className="bg-black_badge text-secondary_color text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300 font-chaney">
-													#28760
-												</span>
-											</th>
-											<td className="px-6 py-4">Bug avec Docker</td>
-											<td className="px-6 py-4">Launch des cont...</td>
-											<td className="px-6 py-4">
-												<strong className="border border-success text-white bg-success uppercase px-5 py-1.5 rounded-full text-[10px] tracking-wide"></strong>
-											</td>
-											<td className="px-6 py-4">dev</td>
-											<td className="px-6 py-4">SGB</td>
-											<td className="px-6 py-4">13/02/2021</td>
-										</tr>
-										<tr className="dark:bg-gray-800">
-											<th scope="row" className="px-6 py-4 font-medium dark:text-white whitespace-nowrap">
-												<span className="bg-black_badge text-secondary_color text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300 font-chaney">
-													#82635
-												</span>
-											</th>
-											<td className="px-6 py-4">Link erroné</td>
-											<td className="px-6 py-4">La base de données...</td>
-											<td className="px-6 py-4">
-												{' '}
-												<strong className="border border-danger text-white bg-danger uppercase px-5 py-1.5 rounded-full text-[10px] tracking-wide"></strong>
-											</td>
-											<td className="px-6 py-4">dev</td>
-											<td className="px-6 py-4">Surf Coffee Shop</td>
-											<td className="px-6 py-4">20/06/2021</td>
-										</tr>
-									</tbody>
-								</table>
-							</div>
+							{actualUser.issues_assigned.length > 0
+          ? <div>
+              <DisplayIssuesTitle/>
+              <div>
+                {actualUser.issues_assigned
+                  ? actualUser.issues_assigned.map((issue) => (
+					issue.status === 'DONE'
+						? <NavLink to={`/issue/${issue.id}`}>
+						<DisplayIssuesValues  issue={issue} issues={actualUser}/>
+						</NavLink>
+						: ''
+                  ))
+                  : <p className='text-xl font-bold'>Aucun ticket ne vous est assigné pour le moment</p>
+                }
+              </div> 
+            </div>
+            // <div>
+            //   <Issues issues={actualUser.issues_assigned }/>
+            // </div>
+          : <p className='mx-auto text-xl font-bold tracking-wide py-20'>Aucun ticket ne vous est assigné</p>
+        }
 						</div>
 					</div>
 					{/* </div> */}
 				</>
 			) : (
-				<>Pas de données :'(</>
+				<>''</>
 			)}
 		</div>
 	);

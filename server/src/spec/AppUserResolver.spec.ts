@@ -36,7 +36,6 @@ describe("UserResolver", () => {
 				id
 				first_name
 				last_name
-				roles
 				email
 				created_at
 				project_assigned { 
@@ -65,7 +64,6 @@ describe("UserResolver", () => {
         user1.last_name = "Vador";
         user1.email = 'dark.vador@darkside.com';
         user1.password = 'root'
-        user1.roles = 'admin';
         user1.created_at = "2016-07-20T17:30:15+05:30";
         await user1.save();
 
@@ -74,7 +72,6 @@ describe("UserResolver", () => {
         user2.last_name = "Sauron";
         user2.email = 'lord.sauron@mordor.com';
         user2.password = 'root'
-        user2.roles = 'admin';
         user2.created_at = "2016-06-20T17:30:15+05:30";
         await user2.save();
 
@@ -89,7 +86,6 @@ describe("UserResolver", () => {
                 "first_name": "Dark",
                 "last_name": "Vador",
                 "email": "dark.vador@darkside.com",
-                "roles": "admin",
                 "password": "root,
                 "project_assigned": Array [],
             },
@@ -98,7 +94,6 @@ describe("UserResolver", () => {
                 "first_name": "Lord",
                 "last_name": "Sauron",
                 "email": "lord.sauron@mordor.com",
-                "roles": "admin",
                 "password": "root,
                 "project_assigned": Array [],
             },
@@ -110,12 +105,11 @@ describe("UserResolver", () => {
 
   describe("mutation createUser", () => {
     const CREATE_USER = `
-    mutation createUser($firstName: String!, $lastName: String!, $roles: String!, $email: String!, $password: String!, $createdAt: String!) {
-		createUser(first_name: $firstName, last_name: $lastName, roles: $roles, email: $email, password: $password, created_at: $createdAt) {
+    mutation createUser($firstName: String!, $lastName: String!, $email: String!, $password: String!, $createdAt: String!) {
+		createUser(first_name: $firstName, last_name: $lastName, email: $email, password: $password, created_at: $createdAt) {
 			id
 			first_name
 			last_name
-			roles
 			email
 			created_at
 		}
@@ -128,7 +122,6 @@ describe("UserResolver", () => {
         variables: {
             first_name: "Lord",
             last_name: "Voldemort",
-            roles: "admin",
             email: "lord.voldemor@askaban.com",
             password: "invalide",
             created_at: "2016-06-20T17:30:15+05:30"
@@ -144,7 +137,6 @@ describe("UserResolver", () => {
         id: "1",
         first_name: "Lord",
         last_name: "Voldemort",
-        roles: "admin",
         email: "lord.voldemor@askaban.com",
         password: "invalide",
         created_at: "2016-06-20T17:30:15+05:30"
@@ -154,12 +146,11 @@ describe("UserResolver", () => {
 
   describe("mutation updateUser", () => {
     const UPDATE_USER = `
-    mutation updateUser($id: Float!, $firstName: String!, $lastName: String!, $roles: String!, $email: String!) {
-		updateUser(id: $id, first_name: $firstName, last_name: $lastName, roles: $roles, email: $email) {
+    mutation updateUser($id: Float!, $firstName: String!, $lastName: String!, $email: String!) {
+		updateUser(id: $id, first_name: $firstName, last_name: $lastName, email: $email) {
 			id
 			first_name
 			last_name
-			roles
 			email
 		}
 	}
@@ -197,7 +188,6 @@ describe("UserResolver", () => {
         user.last_name = "Vador";
         user.email = 'dark.vador@darkside.com';
         user.password = 'root'
-        user.roles = 'admin';
         user.created_at = "2016-07-20T17:30:15+05:30";
         await user.save();
 

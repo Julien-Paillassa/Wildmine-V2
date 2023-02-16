@@ -9,7 +9,6 @@ const UpdateUser = ({ setDisplayUpdateUser, user}) => {
 	const [lastName, setLastName] = useState(user.last_name);
 	const [firstName, setFirstName] = useState(user.first_name);
 	const [email, setEmail] = useState(user.email);
-    const [roles, setRoles] = useState(user.roles);
 
 	const [sendUserNewsInformations] = useMutation(
 		updateUser, 
@@ -27,7 +26,6 @@ const UpdateUser = ({ setDisplayUpdateUser, user}) => {
                 id: parseInt(user.id),
 			    firstName,
 			    lastName,
-			    roles,
 			    email,					
 			},
             
@@ -70,15 +68,6 @@ const UpdateUser = ({ setDisplayUpdateUser, user}) => {
 					labelClassName="text-sm"
 					setValue={setEmail}
 					value={email}
-					required
-				/>
-
-                <Input
-					label="role"
-					placeHolder="Entrez votre role"
-					labelClassName="text-sm"
-					setValue={setRoles}
-					value={roles}
 					required
 				/>
 
